@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
     std::cout<<"Start\n\n\n";
     QCoreApplication a(argc, argv);    
-    //dfhfdghdfgfgd
+    //
 
     std::filebuf* fout = new std::filebuf;
     std::streambuf* backup = std::cout.rdbuf();
