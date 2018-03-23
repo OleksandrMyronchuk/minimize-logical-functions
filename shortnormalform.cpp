@@ -33,16 +33,19 @@ std::string ShortNormalForm::print() const
 /**** UNIQUE FUNCTIONS ****/
 std::vector<__uint64> ShortNormalForm::deleteDuplicates()/*номера які були видалені*/
 {
-    std::sort(this->_expressionSNFs.begin(), this->_expressionSNFs.end());
-    std::size_t expressionSNFsSize = this->_expressionSNFs.size() - 1;
+    std::size_t expressionSNFsSize = this->_expressionSNFs.size();
     std::vector<__uint64> duplicates;
     for(std::size_t i(0); i < expressionSNFsSize; i++)
     {
-        if(this->_expressionSNFs.at(i) == this->_expressionSNFs.at(i + 1))
+        for(std::size_t j(i + 1); j < expressionSNFsSize; j++)
         {
-            duplicates.push_back( i + duplicates.size() );
-            this->_expressionSNFs.erase( this->_expressionSNFs.begin() + i );
-            expressionSNFsSize--;
+            if( this->_expressionSNFs.at(i) == this->_expressionSNFs.at(j) )
+            {
+                duplicates.push_back( j + duplicates.size() );
+                this->_expressionSNFs.erase( this->_expressionSNFs.begin() + j );
+                expressionSNFsSize--;
+                j--;
+            }
         }
     }
     return duplicates;
