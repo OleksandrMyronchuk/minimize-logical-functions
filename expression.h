@@ -11,6 +11,8 @@ private:
     __uint64 _variables;
     __uint64 _shortenedVars;// 1 - shortened, 0 - not
 public:
+    static std::size_t staticVarsSize;???
+
     /**** CONSTRUCTOR & DESTRUCTOR ****/
     Expression();    
     ~Expression();
@@ -25,7 +27,7 @@ public:
     void setVar(bool var, __uint8 varInd);
     std::pair<__uint64, __uint64> getAllVars() const;
     bool getVar(__uint8 varSize) const;
-    static std::size_t getVarSize(std::size_t setVarSize = 0);//кількість змінних у Exptrtion
+    //static std::size_t getVarSize(std::size_t setVarSize = 0);//кількість змінних у Exptrtion
     inline bool operator==(const Expression &other) const
     {
         return  ( this->_shortenedVars == other._shortenedVars ) &&

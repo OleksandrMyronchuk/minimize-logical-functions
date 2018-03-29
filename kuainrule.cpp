@@ -7,12 +7,62 @@
 #include <algorithm>
 #include <custompair.h>
 #include <expression.h>
-#include <normalform.h>
+#include "normalform.h"
 
 /******** PRIVATE ********/
 
-std::string KuainRule::data;
-std::string KuainRule::lastData;
+template<typename tNF>
+ShortNormalForm *KuainRule::gluing(tNF *typeNormalForm)
+{
+
+    ShortNormalForm *shortNormalForm = new ShortNormalForm; /*Create the new SNF that will be used as a result*/
+    std::size_t exprSize = typeNormalForm->exprSize(); /*Get size of the current NF*/
+    std::vector<bool> wasShortened(exprSize, {false});
+    lastData += "{\"g\":[";
+    for(std::size_t i(0); i < exprSize; i++)
+    {
+        for(std::size_t j(i + 1); j < exprSize; j++)
+        {
+            Expression *currentExpression = Expression::gluing(
+                            typeNormalForm->getExprById( i ),
+                            typeNormalForm->getExprById( j )
+                        );
+            if( currentExpression == nullptr )
+                continue;
+
+            lastData += '[' + std::to_string( i + 1 ) + ',' + std::to_string( j + 1 ) + ',';
+            lastData += currentExpression->print();
+            lastData += "],";
+
+            wasShortened[i] = true;
+            wasShortened[j] = true;
+            shortNormalForm->setExpr( currentExpression );
+        }
+    }
+
+    eraseLastComma(lastData);
+
+    lastData += "]},{\"ng\":[";
+
+    bool changeIndicator(false);
+    for(std::size_t i(0); i < exprSize; i++)
+    {
+        if( !wasShortened[i] )
+        {
+            lastData += typeNormalForm->getExprById( i ).print() + ',';
+            shortNormalForm->setExpr( typeNormalForm->getExprById( i ) );
+        }
+        else
+        {
+            changeIndicator = true;
+        }
+    }
+
+    eraseLastComma(lastData);
+
+    lastData += "]}";
+    return changeIndicator ? shortNormalForm : nullptr;
+}
 
 /******** PUBLIC ********/
 
@@ -23,186 +73,119 @@ KuainRule::~KuainRule(){}
 /**** OVERRIDE FUNCTIONS ****/
 std::string KuainRule::print()
 {
-    return data;
+    return this->_data;
 }
 
 /**** UNIQUE FUNCTIONS ****/
-/*
-{ "glu" : [ 0, [ 1, 3, <expr> ], [ 1, 5, <expr> ],... ] ,
-[ 1, [ 2, 3, <expr> ], [ 2, 4, <expr> ],... ] }
-*/
-template<typename tNF>
-ShortNormalForm *KuainRule::gluing(tNF *typeNormalForm)
-{
-    ShortNormalForm *shortNormalForm = new ShortNormalForm;
-    std::size_t exprSize = typeNormalForm->exprSize();
-    std::vector<bool> wasShortened(exprSize, {false});
-    bool entry(false);
-    lastData += "{\"g\":[";
-    for(std::size_t i(0); i < exprSize; i++)
-    {        
-        for(std::size_t j(i + 1); j < exprSize; j++)
-        {
-            Expression *currentExpression = Expression::gluing(
-                            typeNormalForm->getExprById( i ),
-                            typeNormalForm->getExprById( j )
-                        );
-            if( currentExpression == nullptr )
-                continue;
-
-            if(entry)
-                lastData += ',';
-            else
-                entry = true;
-            lastData += '[' + std::to_string( i + 1 ) + ',' + std::to_string( j + 1 ) + ',';
-            lastData += currentExpression->print();
-            lastData += ']';
-
-            wasShortened[i] = true;
-            wasShortened[j] = true;
-            shortNormalForm->setExpr( currentExpression );
-        }        
-    }
-    lastData += "]},{\"ng\":[";
-    entry = false;
-    bool changeIndicator(false);
-    for(std::size_t i(0); i < exprSize; i++)
-    {
-        if( !wasShortened[i] )
-        {
-            if(entry)
-                lastData += ',';
-            else
-                entry = true;
-            lastData += typeNormalForm->getExprById( i ).print();
-
-            shortNormalForm->setExpr( typeNormalForm->getExprById( i ) );
-        }
-        else
-        {
-            changeIndicator = true;
-        }
-    }
-    lastData += "]}";
-    return changeIndicator ? shortNormalForm : nullptr;
-}
+#define eraseLastComma( str ) do { \
+    if(',' == str.at(str.length() - 1)) \
+        str.erase( str.length() - 1 ); \
+    } while( false )
 
 ShortNormalForm *KuainRule::gluingLoop(PerfectNormalForm *perfectNormalForm)
 {   
-    data += "{\"glu\":[[";
+    this->_data += "{\"glu\":[[";
 
-    ShortNormalForm *shortNormalForm = KuainRule::gluing(perfectNormalForm);
+    ShortNormalForm *shortNormalForm = KuainRule::gluing(perfectNormalForm); /*Result*/
     ShortNormalForm *nextForm = shortNormalForm;
 
-    data += lastData;lastData.clear();/*getlastDataAndClear*/
-    data += "]";
+    this->_data += lastData;
+    this->_lastData.clear();
+    this->_data += "]";
 
     do
     {
         shortNormalForm = nextForm;
-        nextForm = KuainRule::gluing(nextForm);
-        if(nextForm != nullptr)
+        nextForm = KuainRule::gluing(nextForm); /*Gluing*/
+        if(nextForm != nullptr) /*Check if it was gluing*/
         {
-            data += ",[";
-            data += lastData;lastData.clear();/*getlastDataAndClear*/
-            data += "]";
+            this->_data += ",[";
+            this->_data += lastData;
+            this->_lastData.clear();
+            this->_data += "]";
         }
         else
         {
-            data += "]}\n";
+            this->_data += "]}\n";
             break;
         }
     }
     while ( true );
-//перенести
-    bool entry(false);
+    /*Begin of delete duplicate numbers*/
     std::vector<__uint64> duplicates = shortNormalForm->deleteDuplicates();
     std::size_t duplicatesSize = duplicates.size();
     data += "{\"snf_dplc\":[";
     for(std::size_t i(0); i < duplicatesSize; i++)
     {
-        if(entry)
-            data += ',';
-        else
-            entry = true;
-        data += std::to_string( duplicates.at(i) );
-    }
+        data += std::to_string( duplicates.at(i) ) + ',';
+    }    
+    eraseLastComma(data);
     data += "]}\n";
-//
+    /*End of delete duplicate numbers*/
     return shortNormalForm;
 }
 
 NormalForm *KuainRule::absorption(PerfectNormalForm *perfectNormalForm, ShortNormalForm *shortNormalForm)
 {
-    std::size_t PNFSize = perfectNormalForm->exprSize();
-    std::size_t SNFSize = shortNormalForm->exprSize();
-    std::vector<bool> row(PNFSize, {false});
-    __uint64 maxAbsorptionInd(0);//dangerously
-    __uint64 currentCounter(0);
-    __uint64 lastCounter(0);
-    __uint64 SNFshortenedVars;
-    bool isWorkCompleted(false);
-    NormalForm *normalForm = new NormalForm;
-    bool entry(false);
-    bool entry1(false);
-    data += "{\"absr\":[";
+#define checkOverlap(id1, id2, SNFshrtndExpr) \
+(SNFshortenedExpr = ~shortNormalForm->getExprById( id1 ).getAllVars().second), \
+((shortNormalForm->getExprById( id1 ).getAllVars().first & SNFshortenedExpr) == \
+(perfectNormalForm->getExprById( id2 ).getAllVars().first & SNFshortenedExpr))
+
+    std::size_t PNFSize = perfectNormalForm->exprSize(); /*Get size of the PNF vector*/
+    std::size_t SNFSize = shortNormalForm->exprSize(); /*Get size of the SNF vector*/
+    std::vector<bool> rows(PNFSize, {false}); /*Contains information about overlap rows*/
+    __uint64 maxAbsorptionInd(0); /*The index of the element with maximum absorption*/
+    __uint64 currentCounter(0); /*Counter enclosed loop*/
+    __uint64 lastCounter(0); /*Total loop counter*/
+    __uint64 SNFshortenedExpr; /*Inversion of variables that have been reduced*/
+    bool wasOverlap(false);
+    NormalForm *normalForm = new NormalForm; /*Result*/
+
+    this->_data += "{\"absr\":[";
     do
     {
-        for (std::size_t i(0); i < SNFSize; i++)
+        lastCounter = 0; /*Reset counter*/
+        for (std::size_t i(0); i < SNFSize; i++) /*SNF*/
         {
-            currentCounter = 0;
-            for (std::size_t j(0); j < PNFSize; j++)
-            {                                
-                SNFshortenedVars = ~shortNormalForm->getExprById( i ).getAllVars().second;
-                if(
-                        ((shortNormalForm->getExprById( i ).getAllVars().first & SNFshortenedVars) ==
-                        (perfectNormalForm->getExprById( j ).getAllVars().first & SNFshortenedVars)) &&
-                        !row[j]
-                        )
+            currentCounter = 0; /*Reset counter*/
+            for (std::size_t j(0); j < PNFSize; j++) /*PNF*/
+            {                                                
+                if( checkOverlap(i, j, SNFshortenedExpr) && !rows[j] ) /*Check if the SNF and PNF are overlap and did not shorten*/
                 {
-                    currentCounter++;
-                    if(currentCounter > lastCounter)
+                    currentCounter++; /*Increase the local counter*/
+                    if(currentCounter > lastCounter) /*Check if the currentCounter is greater than lastCounter*/
                     {
                         lastCounter = currentCounter;
-                        maxAbsorptionInd = i;
+                        maxAbsorptionInd = i; /*Set into the maxAbsorptionInd index that overlaps the most cases*/
                     }
                 }
             }
-        }
-        lastCounter = 0;
-        currentCounter = 0;
-        normalForm->setExpr( shortNormalForm->getExprById( maxAbsorptionInd ) );
-        if(entry1)
-            data += ',';
-        else
-            entry1 = true;
-        data += "[";
-        data += std::to_string( maxAbsorptionInd + 1 );
-        data += ",[";
-        entry = false;
-        for (std::size_t i(0); i < PNFSize; i++)
-        {
-            SNFshortenedVars = ~shortNormalForm->getExprById( maxAbsorptionInd ).getAllVars().second;
-            if(
-                (shortNormalForm->getExprById( maxAbsorptionInd ).getAllVars().first & SNFshortenedVars) ==
-                (perfectNormalForm->getExprById( i ).getAllVars().first & SNFshortenedVars)
-                )
+        }               
+        normalForm->setExpr( shortNormalForm->getExprById( maxAbsorptionInd ) ); /*Set into the NF expression that overlaps the most cases*/
+
+        this->_data += "[";
+        this->_data += std::to_string( maxAbsorptionInd + 1 );
+        this->_data += ",[";
+
+        wasOverlap = false; /*Reset*/
+        for (std::size_t i(0); i < PNFSize; i++) /*PNF*/
+        {             
+            if( checkOverlap(maxAbsorptionInd, i, SNFshortenedExpr) ) /*Check if the SNF and PNF at maxAbsorptionInd are overlap*/
             {                
-                if(entry)
-                    data += ',';
-                else
-                    entry = true;
-                data += std::to_string( i + 1 );
-                row[i] = true;
+                this->_data += std::to_string( i + 1 ) + ',';
+                rows[i] = true; /*Mark up all of overlapped cases*/
+                wasOverlap = true;
             }
         }
-        data += "]]";
-        isWorkCompleted = true;
-        for (std::size_t i(0); i < PNFSize; i++)
-        {
-            isWorkCompleted = isWorkCompleted && row[i];
-        }
-    }while(!isWorkCompleted);
-    data += "]}";
+        if(wasOverlap)
+            eraseLastComma(data);
+
+        this->_data += "]],";
+
+    }while( !std::all_of(rows.begin(), rows.end(), [](bool elem){return elem;}) ); /*Until all of rows will be overlap*/
+    eraseLastComma( this->_data );
+    this->_data += "]}";
     return normalForm;
+#undef checkOverlap
 }

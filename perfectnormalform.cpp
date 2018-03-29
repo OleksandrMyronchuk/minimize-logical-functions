@@ -8,16 +8,15 @@
 /**** CONSTRUCTOR & DESTRUCTOR ****/
 PerfectNormalForm::PerfectNormalForm(const std::vector<__uint64> &truCons) :
     _expressionPNFs( truCons.size() )
-{    
-    this->setTruCons( truCons );
-    this->setNumOfVectorVar( truCons );
+{        
+    this->setAllExpr( truCons ); /*Init the _expressionPNFs vector*/
 }
 PerfectNormalForm::~PerfectNormalForm(){}
 
 /**** OVERRIDE FUNCTIONS ****/
 std::vector<Expression> &PerfectNormalForm::getAllExpr()
 {
-    return this->_expressionPNFs;
+    return this->_expressionPNFs; /*return the PNF vector*/
 }
 
 std::string PerfectNormalForm::print() const
@@ -46,13 +45,13 @@ cnst[0] <номер = 1, значення = cnst[0]> / cnst[22] <номер = 23
         data += this->_expressionPNFs[i].print();
     }
     data += "]}\n";
-    data += this->Constituent::print();
+    ???data += this->Constituent::print();
     return data;
 }
 
 /**** UNIQUE FUNCTIONS ****/
-void PerfectNormalForm::setNumOfVectorVar(const std::vector<__uint64> &truCons)
+void PerfectNormalForm::setAllExpr(const std::vector<__uint64> &truCons)
 {
-    for(__uint64 i(0); i < truCons.size(); i++)
-        this->_expressionPNFs[i].setAllVars(truCons[i]);
+    for(__uint64 i(0); i < truCons.size(); i++) /*For each true contituent*/
+        this->_expressionPNFs[i].setAllVars(truCons[i]); /*Set variables to the _expressionPNFs vector of expressions*/
 }

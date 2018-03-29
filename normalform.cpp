@@ -10,7 +10,7 @@ NormalForm::~NormalForm(){}
 /**** OVERRIDE FUNCTIONS ****/
 std::vector<Expression> &NormalForm::getAllExpr()
 {
-    return this->_expressionNFs;
+    return this->_expressionNFs; /*return the NF vector*/
 }
 
 std::string NormalForm::print() const

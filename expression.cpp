@@ -42,9 +42,10 @@ std::string Expression::print() const
 /**** UNIQUE FUNCTIONS ****/
 Expression *Expression::gluing(const Expression &var1, const Expression &var2)
 {
-    std::size_t varSize = Expression::getVarSize();
-    if( var1 == var2 )
+    if( var1 == var2 ) /*check if ???*/
         return nullptr;
+
+    std::size_t varSize = Expression::getVarSize();
 
     for(__uint8 i(0); i < varSize; i++)
     {
@@ -89,10 +90,10 @@ std::pair<__uint64, __uint64> Expression::getAllVars() const
     return std::make_pair(this->_variables, this->_shortenedVars);
 }
 
-std::size_t Expression::getVarSize(std::size_t setVarSize)
+/*std::size_t Expression::getVarSize(std::size_t setVarSize)
 {
     static std::size_t staticVarSize = 0;
     if(setVarSize != 0)
         staticVarSize = setVarSize;
     return staticVarSize;
-}
+}*/

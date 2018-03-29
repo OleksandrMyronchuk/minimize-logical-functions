@@ -11,7 +11,7 @@ std::string Constituent::print() const
 {
     std::string data;
 
-    std::size_t allConstituentSize = pow(2, Expression::getVarSize());
+    std::size_t allConstituentSize = pow(2, this->???);
     data += "{\"cnst\":[";
     for(std::size_t i(0), j(0); i < allConstituentSize; i++)
     {

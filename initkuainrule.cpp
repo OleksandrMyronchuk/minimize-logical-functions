@@ -5,10 +5,12 @@
 #include <expression.h>
 
 /**** CONSTRUCTOR & DESTRUCTOR ****/
-InitKuainRule::InitKuainRule( __uint8 varNum, const std::vector<__uint64> &truCons )
+InitKuainRule::InitKuainRule( std::size_t numVars, const std::vector<__uint64> &truCons )
+///!!!:::
 {
-    Expression::getVarSize(varNum);
+    this->_numVars = varNum;
     this->perfectNormalForm = new PerfectNormalForm( truCons );
+    this->constituent = new Constituent( truCons );
 }
 
 /**** OVERRIDE FUNCTIONS ****/
@@ -22,14 +24,14 @@ std::string InitKuainRule::print() const
     data += '\n';
     data += this->normalForm->print();
     data += '\n';
-    data += KuainRule::print();
+    data += this->_data;
     return data;
 }
 
 /**** UNIQUE FUNCTIONS ****/
 NormalForm *InitKuainRule::run()
 {   
-    this->shortNormalForm = KuainRule::gluingLoop( this->perfectNormalForm );
-    this->normalForm = KuainRule::absorption( this->perfectNormalForm, this->shortNormalForm );    
+    this->shortNormalForm = this->gluingLoop( this->perfectNormalForm );
+    this->normalForm = this->absorption( this->perfectNormalForm, this->shortNormalForm );
     return this->normalForm;
 }

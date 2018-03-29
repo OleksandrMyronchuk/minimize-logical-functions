@@ -11,7 +11,7 @@ ShortNormalForm::~ShortNormalForm() {}
 /**** OVERRIDE FUNCTIONS ****/
 std::vector<Expression> &ShortNormalForm::getAllExpr()
 {
-    return this->_expressionSNFs;
+    return this->_expressionSNFs; /*return the SNF vector*/
 }
 
 std::string ShortNormalForm::print() const
@@ -31,22 +31,22 @@ std::string ShortNormalForm::print() const
 }
 
 /**** UNIQUE FUNCTIONS ****/
-std::vector<__uint64> ShortNormalForm::deleteDuplicates()/*номера які були видалені*/
-{
-    std::size_t expressionSNFsSize = this->_expressionSNFs.size();
-    std::vector<__uint64> duplicates;
-    for(std::size_t i(0); i < expressionSNFsSize; i++)
+std::vector<__uint64> ShortNormalForm::deleteDuplicates()
+{    
+    std::size_t expressionSNFsSize = this->_expressionSNFs.size(); /*Get size of the SNF vector*/
+    std::vector<__uint64> duplicates; /*Create a new vector to save deleted numbers*/
+    for(std::size_t i(0); i < expressionSNFsSize; i++) /*Overcoming all possible combinations of the SNF*/
     {
         for(std::size_t j(i + 1); j < expressionSNFsSize; j++)
-        {
-            if( this->_expressionSNFs.at(i) == this->_expressionSNFs.at(j) )
-            {
-                duplicates.push_back( j + duplicates.size() );
-                this->_expressionSNFs.erase( this->_expressionSNFs.begin() + j );
-                expressionSNFsSize--;
-                j--;
+        {            
+            if( this->_expressionSNFs.at(i) == this->_expressionSNFs.at(j) ) /*Check if the expressions "i" and "j" are the same*/
+            {                
+                duplicates.push_back( j + duplicates.size() ); /*Push a duplicate number to the vector*/
+                this->_expressionSNFs.erase( this->_expressionSNFs.begin() + j ); /*Erase the current duplicate expression*/
+                expressionSNFsSize--; /*Change size of the SNF (because one expression was deleted)*/
+                j--; /*Change the number of loop steps*/
             }
         }
     }
-    return duplicates;
+    return duplicates; /*return numbers that were deleted*/
 }
