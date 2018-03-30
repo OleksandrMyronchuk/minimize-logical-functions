@@ -1,16 +1,17 @@
 #include "initkuainrule.h"
 
 #include <iostream>
+#include <cmath>
 #include <kuainrule.h>
 #include <expression.h>
 
 /**** CONSTRUCTOR & DESTRUCTOR ****/
-InitKuainRule::InitKuainRule( std::size_t numVars, const std::vector<__uint64> &truCons )
+InitKuainRule::InitKuainRule( const std::vector<__uint64> &cons )
 ///!!!:::
 {
-    this->_numVars = varNum;
-    this->perfectNormalForm = new PerfectNormalForm( truCons );
-    this->constituent = new Constituent( truCons );
+    this->_numVars = sqrt( cons.size() );
+    this->perfectNormalForm = new PerfectNormalForm( ? );
+    this->constituent = new Constituent( ? );
 }
 
 /**** OVERRIDE FUNCTIONS ****/

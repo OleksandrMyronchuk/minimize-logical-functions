@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     std::cout.rdbuf(fout);
 
     //        
-    InitKuainRule k(4, {0,1,4,6,7,8,9,14,15});
+    InitKuainRule k({true, true, false, false, true, false, true, true, true, true, false, false, false, false, true, true});
     NormalForm *result = k.run();
     std::cout << k.print();
     //

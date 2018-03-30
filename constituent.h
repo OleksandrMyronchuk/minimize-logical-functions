@@ -8,7 +8,7 @@
 class Constituent : public AbstractObject
 {
 private:
-    std::vector<__uint64> _truCons;
+    __uint64 _cons;
 public:
     /**** CONSTRUCTOR & DESTRUCTOR ****/
     Constituent();
@@ -19,7 +19,7 @@ public:
 
     /**** UNIQUE FUNCTIONS ****/
     __uint64 getSize();
-    __uint64 getTruCons(__uint64 consNum);
-    void setTruCons(const std::vector<__uint64>& truCons);
+    __uint64 getCons(__uint64 consNum);
+    void setCons(const __uint64 &cons);
 };
 #endif // CONSTITUENT_H

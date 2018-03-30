@@ -32,8 +32,8 @@ std::string Constituent::print() const
 }
 
 /**** UNIQUE FUNCTIONS ****/
-void Constituent::setTruCons(const std::vector<__uint64> &truCons)
+void Constituent::setCons(const __uint64 &cons)
 {
-    this->_truCons = truCons;
+    this->_cons = cons;
 }
 
