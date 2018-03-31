@@ -2,7 +2,7 @@
 #define ABSTRACTNORMALFORM_H
 
 #include <vector>
-#include <expression.h>
+#include "expression.h"
 
 class AbstractNormalForm
 {

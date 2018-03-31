@@ -1,9 +1,9 @@
 #ifndef CRAMERRULE_H
 #define CRAMERRULE_H
 
-#include <shortnormalform.h>
-#include <normalform.h>
-#include <perfectnormalform.h>
+#include "shortnormalform.h"
+#include "normalform.h"
+#include "perfectnormalform.h"
 #include <string>
 
 class KuainRule
@@ -34,7 +34,7 @@ private:
      * \return Shortened normal form from the \a typeNormalForm
      */
     template <typename tNF>    
-    ShortNormalForm static *gluing(tNF *typeNormalForm);
+    ShortNormalForm *gluing(tNF *typeNormalForm);
 public:
     /**** CONSTRUCTOR & DESTRUCTOR ****/
     KuainRule();

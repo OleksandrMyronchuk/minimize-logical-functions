@@ -1,10 +1,10 @@
 #ifndef SHORTNORMALFORM_H
 #define SHORTNORMALFORM_H
 
-#include <defines.h>
-#include <expression.h>
-#include <abstractnormalform.h>
-#include <abstractobject.h>
+#include "defines.h"
+#include "expression.h"
+#include "abstractnormalform.h"
+#include "abstractobject.h"
 #include <cstddef>
 #include <vector>
 

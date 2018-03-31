@@ -2,11 +2,11 @@
 #define PERFECTNORMALFORM_H
 
 #include <vector>
-#include <defines.h>
-#include <expression.h>
-#include <constituent.h>
-#include <abstractobject.h>
-#include <abstractnormalform.h>
+#include "defines.h"
+#include "expression.h"
+#include "constituent.h"
+#include "abstractobject.h"
+#include "abstractnormalform.h"
 
 class PerfectNormalForm : public AbstractObject, public AbstractNormalForm
 {
@@ -38,7 +38,7 @@ public:
      * \param [in] truCons - Vector of true constituents
      * \note The count of the \a truCons parameter begins with a zero number
      */
-    PerfectNormalForm(const std::vector<__uint64>& truCons);
+    PerfectNormalForm(const std::vector<Expression> &allExpr);
     ~PerfectNormalForm();
 
     /**** OVERRIDE FUNCTIONS ****/
@@ -54,7 +54,7 @@ public:
      * \brief Set all expressions to the PNF class
      * \param [in] truCons - Vector of true constituents
      */
-    void setAllExpr(const std::vector<__uint64> &truCons);
+    void setAllExpr(const std::vector<Expression> &allExpr);
 };
 
 #endif // PERFECTNORMALFORM_H

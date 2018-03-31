@@ -1,16 +1,12 @@
-﻿#include <QCoreApplication>
-#include <initkuainrule.h>
-#include <expression.h>
-#include <custompair.h>
-#include <normalform.h>
+﻿#include "initkuainrule.h"
+#include "expression.h"
+#include "normalform.h"
 #include <bitset>
 #include <iostream>
 #include <fstream>
-#include <minijson_writer.hpp>
 int main(int argc, char *argv[])
 {
-    std::cout<<"Start\n\n\n";
-    QCoreApplication a(argc, argv);    
+    std::cout<<"Start\n\n\n";        
     //
 
     std::filebuf* fout = new std::filebuf;
@@ -32,7 +28,7 @@ int main(int argc, char *argv[])
 
     //
     std::cout<<"\n\n\nEnd";
-    return a.exec();
+    return 0;
 }
 
 /*

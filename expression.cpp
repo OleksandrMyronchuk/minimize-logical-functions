@@ -5,36 +5,32 @@
 #include <bitset>
 #include <cmath>
 #include <exception>
-#include <minijson_writer.hpp>
 #include <typeinfo>
 
 /**** CONSTRUCTOR & DESTRUCTOR ****/
-Expression::Expression() : _shortenedVars(0){}
+Expression::Expression(){}
 Expression::~Expression(){}
 
 /**** OVERRIDE FUNCTIONS ****/
 std::string Expression::print() const
 {
     std::string data;
-
-    bool entry(false);
+    
     data += "{\"expr\":[";
-    __uint8 expressionSize = Expression::getVarSize();
-    for(__uint8 i(0); i < expressionSize; i++)
+    std::size_t expressionSize = this->_variables.size();
+    for(std::size_t i(0); i < expressionSize; i++)
     {
-        if( compareBits(0xffffffffffffffffull, ~this->_shortenedVars, i) )
-        {
-            if(entry)
-                data += ',';
-            else
-                entry = "true";
+		if (!this->getShortend(i))
+		{			
             data += '[';
-            data += boolToStr( ((__uint64)pow(2, i) & this->_variables) );/*?optimize*/
+            data += boolToStr( this->getValue( i ) );/*?optimize*/
             data += ',';
             data += std::to_string( (unsigned)i+1 );
             data += ']';
+			data += ',';
         }
     }
+	eraseLastComma(data);
     data += "]}";
     return data;
 }
@@ -42,22 +38,22 @@ std::string Expression::print() const
 /**** UNIQUE FUNCTIONS ****/
 Expression *Expression::gluing(const Expression &var1, const Expression &var2)
 {
-    if( var1 == var2 ) /*check if ???*/
+    if( var1.compareAllVariables( var2 ) ) /*check if ???*/
         return nullptr;
 
-    std::size_t varSize = Expression::getVarSize();
+    std::size_t varSize = var1._variables.size();
 
-    for(__uint8 i(0); i < varSize; i++)
+    for(std::size_t i(0); i < varSize; i++)
     {
-        if( !compareBits(var1._shortenedVars, var2._shortenedVars, i) )
-                    return nullptr;
+        if( var1.getShortend( i ) != var2.getShortend( i ) )
+            return nullptr;
     }
 
-    __uint8 indOfNotEqualVar;//Index of the not equal variable
+    __uint64 indOfNotEqualVar;//Index of the not equal variable
     bool changeIndicator(false);//Check if the indOfNotEqualVar is unique
-    for(__uint8 i(0); i < varSize; i++)
+    for(std::size_t i(0); i < varSize; i++)
     {
-        if( !compareBits(var1._variables, var2._variables, i) )
+        if( var1.getValue( i ) != var2.getValue( i ) )
         {
             if(changeIndicator)//if the indOfNotEqualVar is not unique, leave the function
                 return nullptr;
@@ -68,32 +64,12 @@ Expression *Expression::gluing(const Expression &var1, const Expression &var2)
     if(!changeIndicator)//nothing was change
         return nullptr;
     Expression *result = new Expression;
-    result->_shortenedVars = var1._shortenedVars;
-    result->_shortenedVars ^= (__uint64)pow(2, indOfNotEqualVar);
     result->_variables = var1._variables;
+    result->_variables[ indOfNotEqualVar ] = eValue::logNone;
     return result;
 }
 
-bool Expression::compareBits(__uint64 value1, __uint64 value2, __uint8 ind)
+void Expression::setVar(bool var)
 {
-    __uint64 currentBit = (__uint64)pow(2, ind);
-    return (value1 & currentBit) == (value2 & currentBit);
+    this->_variables.push_back( (var ? logTrue : logFalse) );
 }
-
-void Expression::setAllVars(__uint64 vars)
-{
-    this->_variables = vars;
-}
-
-std::pair<__uint64, __uint64> Expression::getAllVars() const
-{
-    return std::make_pair(this->_variables, this->_shortenedVars);
-}
-
-/*std::size_t Expression::getVarSize(std::size_t setVarSize)
-{
-    static std::size_t staticVarSize = 0;
-    if(setVarSize != 0)
-        staticVarSize = setVarSize;
-    return staticVarSize;
-}*/

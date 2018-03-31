@@ -1,18 +1,27 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-#include <abstractobject.h>
-#include <defines.h>
+#include "abstractobject.h"
+#include "defines.h"
 #include <utility>
+#include <cstddef>
+#include <vector>
+
+enum eValue {logFalse = 0b0, logTrue = 0b1, logNone = 0b10};
 
 class Expression : public AbstractObject
 {
-private:
-    __uint64 _variables;
-    __uint64 _shortenedVars;// 1 - shortened, 0 - not
+private:  
+    inline bool getValue(__uint64 ind) const
+    {
+        return this->_variables.at( ind ) & 1;
+    }
+    inline bool getShortend(__uint64 ind) const
+    {
+        return this->_variables.at( ind ) & 2;
+    }
+    std::vector<__uint8> _variables;
 public:
-    static std::size_t staticVarsSize;???
-
     /**** CONSTRUCTOR & DESTRUCTOR ****/
     Expression();    
     ~Expression();
@@ -21,17 +30,36 @@ public:
     std::string print() const override;
 
     /**** UNIQUE FUNCTIONS ****/
-    Expression static *gluing(const Expression &var1, const Expression &var2);
-    bool static compareBits(__uint64 value1, __uint64 value2, __uint8 ind);
-    void setAllVars(__uint64 vars);
-    void setVar(bool var, __uint8 varInd);
-    std::pair<__uint64, __uint64> getAllVars() const;
-    bool getVar(__uint8 varSize) const;
-    //static std::size_t getVarSize(std::size_t setVarSize = 0);//кількість змінних у Exptrtion
-    inline bool operator==(const Expression &other) const
+    Expression static *gluing(const Expression &var1, const Expression &var2);    
+    void setVar(bool var);    
+    inline bool compareAllValues(const Expression &other) const
     {
-        return  ( this->_shortenedVars == other._shortenedVars ) &&
-                ( this->_variables == other._variables );
+        std::size_t currectVarSize = this->_variables.size();
+
+        if ( currectVarSize != other._variables.size() ) /*check size*/
+            return false;
+        for (std::size_t i(0); i < currectVarSize; i++) /*check value*/
+        {
+			if (this->getShortend(i) || other.getShortend(i))
+				continue; /*skip none value*/
+            if (this->getValue(i) != other.getValue(i))
+                return false;
+        }
+        return true;
+    }
+    inline bool compareAllVariables(const Expression &other) const
+    {
+        std::size_t currectVarSize = this->_variables.size();
+
+        if ( currectVarSize != other._variables.size() ) /*check size*/
+            return false;
+		
+        for (std::size_t i(0); i < currectVarSize; i++) /*check value*/
+		{
+			if (this->_variables.at(i) != other._variables.at(i))
+				return false;
+		}
+        return true;
     }
 };
 

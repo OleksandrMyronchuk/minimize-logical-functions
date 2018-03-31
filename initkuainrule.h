@@ -1,14 +1,14 @@
 #ifndef INITCRAMERRULE_H
 #define INITCRAMERRULE_H
-#include <defines.h>
-#include <perfectnormalform.h>
-#include <constituent.h>
-#include <shortnormalform.h>
-#include <normalform.h>
+#include "defines.h"
+#include "perfectnormalform.h"
+#include "constituent.h"
+#include "shortnormalform.h"
+#include "normalform.h"
 #include "kuainrule.h"
 #include <vector>
 #include <fstream>
-#include <abstractobject.h>
+#include "abstractobject.h"
 
 class InitKuainRule : public AbstractObject, public KuainRule
 {
@@ -38,7 +38,7 @@ public:
      * \brief InitKuainRule ??????????????????????????????????????????????????????????????????
      * \param cons
      */
-    InitKuainRule(const std::vector<__uint64> &cons);
+    InitKuainRule( const std::vector<bool> &cons );
 
     /**** OVERRIDE FUNCTIONS ****/
     /*!

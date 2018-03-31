@@ -2,16 +2,14 @@
 
 #include <iostream>
 #include <cmath>
-#include <kuainrule.h>
-#include <expression.h>
+#include "kuainrule.h"
+#include "expression.h"
 
 /**** CONSTRUCTOR & DESTRUCTOR ****/
-InitKuainRule::InitKuainRule( const std::vector<__uint64> &cons )
-///!!!:::
+InitKuainRule::InitKuainRule( const std::vector<bool> &cons )
 {
-    this->_numVars = sqrt( cons.size() );
-    this->perfectNormalForm = new PerfectNormalForm( ? );
-    this->constituent = new Constituent( ? );
+	this->constituent = new Constituent(cons);
+	this->perfectNormalForm = new PerfectNormalForm(this->constituent->getAllTrueExpr());
 }
 
 /**** OVERRIDE FUNCTIONS ****/
@@ -19,8 +17,10 @@ std::string InitKuainRule::print() const
 {
     std::string data;
 
-    data += this->perfectNormalForm->print();
+    data += this->perfectNormalForm->print();    
     data += '\n';
+	data += this->constituent->print();
+	data += '\n';
     data += this->shortNormalForm->print();
     data += '\n';
     data += this->normalForm->print();

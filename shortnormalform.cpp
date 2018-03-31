@@ -39,7 +39,7 @@ std::vector<__uint64> ShortNormalForm::deleteDuplicates()
     {
         for(std::size_t j(i + 1); j < expressionSNFsSize; j++)
         {            
-            if( this->_expressionSNFs.at(i) == this->_expressionSNFs.at(j) ) /*Check if the expressions "i" and "j" are the same*/
+            if( this->_expressionSNFs.at(i).compareAllVariables( this->_expressionSNFs.at(j) ) ) /*Check if the expressions "i" and "j" are the same*/
             {                
                 duplicates.push_back( j + duplicates.size() ); /*Push a duplicate number to the vector*/
                 this->_expressionSNFs.erase( this->_expressionSNFs.begin() + j ); /*Erase the current duplicate expression*/

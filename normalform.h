@@ -1,9 +1,9 @@
 #ifndef NORMALFORM_H
 #define NORMALFORM_H
 
-#include <expression.h>
-#include <abstractnormalform.h>
-#include <abstractobject.h>
+#include "expression.h"
+#include "abstractnormalform.h"
+#include "abstractobject.h"
 #include <vector>
 
 class NormalForm : public AbstractNormalForm, public AbstractObject
