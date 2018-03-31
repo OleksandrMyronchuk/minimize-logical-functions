@@ -5,37 +5,41 @@
 #include <cstddef>
 #include <cmath>
 
-/**** CONSTRUCTOR & DESTRUCTOR ****/
-PerfectNormalForm::PerfectNormalForm(const std::vector<Expression> &allExpr)
-{
-    this->setAllExpr(allExpr);
-}
-PerfectNormalForm::~PerfectNormalForm(){}
+namespace nsKuainRule {
 
-/**** OVERRIDE FUNCTIONS ****/
-std::vector<Expression> &PerfectNormalForm::getAllExpr()
-{
-    return this->_expressionPNFs; /*return the PNF vector*/
-}
+	/**** CONSTRUCTOR & DESTRUCTOR ****/
+	PerfectNormalForm::PerfectNormalForm(const std::vector<Expression> &allExpr)
+	{
+		this->setAllExpr(allExpr);
+	}
+	PerfectNormalForm::~PerfectNormalForm() {}
 
-std::string PerfectNormalForm::print() const
-{    
-    std::string data;
+	/**** OVERRIDE FUNCTIONS ****/
+	std::vector<Expression> &PerfectNormalForm::getAllExpr()
+	{
+		return this->_expressionPNFs; /*return the PNF vector*/
+	}
 
-    std::size_t expressionPNFsSize = this->_expressionPNFs.size();
-    data += "{\"pnf\":[";
-    for(__uint64 i(0); i < expressionPNFsSize; i++)
-    {
-        if(i != 0)
-            data += ',';
-        data += this->_expressionPNFs[i].print();
-    }
-    data += "]}";    
-    return data;
-}
+	std::string PerfectNormalForm::print() const
+	{
+		std::string data;
 
-/**** UNIQUE FUNCTIONS ****/
-void PerfectNormalForm::setAllExpr(const std::vector<Expression> &allExpr)
-{
-    this->_expressionPNFs = allExpr;
+		std::size_t expressionPNFsSize = this->_expressionPNFs.size();
+		data += "{\"pnf\":[";
+		for (__uint64 i(0); i < expressionPNFsSize; i++)
+		{
+			if (i != 0)
+				data += ',';
+			data += this->_expressionPNFs[i].print();
+		}
+		data += "]}";
+		return data;
+	}
+
+	/**** UNIQUE FUNCTIONS ****/
+	void PerfectNormalForm::setAllExpr(const std::vector<Expression> &allExpr)
+	{
+		this->_expressionPNFs = allExpr;
+	}
+
 }

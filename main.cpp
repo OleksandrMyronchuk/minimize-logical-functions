@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     std::cout.rdbuf(fout);
 
     //        
-    InitKuainRule k({true, true, false, false, true, false, true, true, true, true, false, false, false, false, true, true});
-    NormalForm *result = k.run();
+    nsKuainRule::InitKuainRule k({true, true, false, false, true, false, true, true, true, true, false, false, false, false, true, true});
+	nsKuainRule::NormalForm *result = k.run();
     std::cout << k.print();
     //
 

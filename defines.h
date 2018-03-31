@@ -1,6 +1,8 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+namespace nsKuainRule {
+
 #define __uint64 unsigned long long
 #define __uint8 unsigned char
 
@@ -10,5 +12,7 @@
     if(',' == str.at(str.length() - 1)) \
         str.erase( str.length() - 1 ); \
     } while( false )
+
+}
 
 #endif // DEFINES_H

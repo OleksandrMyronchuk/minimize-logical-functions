@@ -10,49 +10,53 @@
 #include <fstream>
 #include "abstractobject.h"
 
-class InitKuainRule : public AbstractObject, public KuainRule
-{
-private:
-    /*!
-     * \brief Perfect normal form object
-     */
-    PerfectNormalForm *perfectNormalForm;
+namespace nsKuainRule {
 
-    /*!
-     * \brief Short normal form object
-     */
-    ShortNormalForm *shortNormalForm;
+	class InitKuainRule : public AbstractObject, public KuainRule
+	{
+	private:
+		/*!
+		 * \brief Perfect normal form object
+		 */
+		PerfectNormalForm *perfectNormalForm;
 
-    /*!
-     * \brief Normal form object (result)
-     */
-    NormalForm *normalForm;
+		/*!
+		 * \brief Short normal form object
+		 */
+		ShortNormalForm *shortNormalForm;
 
-    /*!
-     * \brief Constituent object
-     */
-    Constituent *constituent;
-public:
-    /**** CONSTRUCTOR & DESTRUCTOR ****/
-    /*!
-     * \brief InitKuainRule ??????????????????????????????????????????????????????????????????
-     * \param cons
-     */
-    InitKuainRule( const std::vector<bool> &cons );
+		/*!
+		 * \brief Normal form object (result)
+		 */
+		NormalForm *normalForm;
 
-    /**** OVERRIDE FUNCTIONS ****/
-    /*!
-     * \brief print
-     * \return
-     */
-    std::string print() const;
+		/*!
+		 * \brief Constituent object
+		 */
+		Constituent *constituent;
+	public:
+		/**** CONSTRUCTOR & DESTRUCTOR ****/
+		/*!
+		 * \brief InitKuainRule ??????????????????????????????????????????????????????????????????
+		 * \param cons
+		 */
+		InitKuainRule(const std::vector<bool> &cons);
 
-    /**** UNIQUE FUNCTIONS ****/
-    /*!
-     * \brief Run calculation
-     * \return Shortened normal form from the truth table
-     */
-    NormalForm *run();
-};
+		/**** OVERRIDE FUNCTIONS ****/
+		/*!
+		 * \brief print
+		 * \return
+		 */
+		std::string print() const;
+
+		/**** UNIQUE FUNCTIONS ****/
+		/*!
+		 * \brief Run calculation
+		 * \return Shortened normal form from the truth table
+		 */
+		NormalForm *run();
+	};
+
+}
 
 #endif // INITCRAMERRULE_H

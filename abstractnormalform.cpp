@@ -1,22 +1,26 @@
 #include "abstractnormalform.h"
 
-/**** UNIQUE FUNCTIONS ****/
-const Expression &AbstractNormalForm::getExprById(__uint64 ind)
-{
-    return this->getAllExpr().at(ind);
-}
+namespace nsKuainRule {
 
-std::size_t AbstractNormalForm::exprSize()
-{
-    return this->getAllExpr().size();
-}
+	/**** UNIQUE FUNCTIONS ****/
+	const Expression &AbstractNormalForm::getExprById(__uint64 ind)
+	{
+		return this->getAllExpr().at(ind);
+	}
 
-void AbstractNormalForm::setExpr(Expression *expression)
-{
-    this->getAllExpr().push_back(*expression);
-}
+	std::size_t AbstractNormalForm::exprSize()
+	{
+		return this->getAllExpr().size();
+	}
 
-void AbstractNormalForm::setExpr(const Expression &expression)
-{
-    this->getAllExpr().push_back(expression);
+	void AbstractNormalForm::setExpr(Expression *expression)
+	{
+		this->getAllExpr().push_back(*expression);
+	}
+
+	void AbstractNormalForm::setExpr(const Expression &expression)
+	{
+		this->getAllExpr().push_back(expression);
+	}
+
 }

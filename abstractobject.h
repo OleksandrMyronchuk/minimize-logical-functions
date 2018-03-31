@@ -4,11 +4,14 @@
 #include <vector>
 #include <string>
 
-class AbstractObject
-{
-public:
-    /**** PURE VIRTUAL FUNCTIONS ****/
-    virtual std::string print() const = 0;
-};
+namespace nsKuainRule {
 
+	class AbstractObject
+	{
+	public:
+		/**** PURE VIRTUAL FUNCTIONS ****/
+		virtual std::string print() const = 0;
+	};
+
+}
 #endif // ABSTRACTOBJECT_H
