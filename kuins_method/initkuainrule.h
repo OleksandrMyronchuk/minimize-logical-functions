@@ -1,14 +1,19 @@
 #ifndef INITCRAMERRULE_H
 #define INITCRAMERRULE_H
-#include "defines.h"
+
+#ifdef KUAINRULE_EXPORTS  
+#define KUAINRULE_API __declspec(dllexport)   
+#else  
+#define KUAINRULE_API __declspec(dllimport)   
+#endif
+
+#include <vector>
 #include "perfectnormalform.h"
-#include "constituent.h"
 #include "shortnormalform.h"
 #include "normalform.h"
-#include "kuainrule.h"
-#include <vector>
-#include <fstream>
+#include "constituent.h"
 #include "abstractobject.h"
+#include "kuainrule.h"
 
 namespace nsKuainRule {
 
@@ -40,21 +45,21 @@ namespace nsKuainRule {
 		 * \brief InitKuainRule ??????????????????????????????????????????????????????????????????
 		 * \param cons
 		 */
-		InitKuainRule(const std::vector<bool> &cons);
+		KUAINRULE_API InitKuainRule(const std::vector<bool> &cons);
 
 		/**** OVERRIDE FUNCTIONS ****/
 		/*!
 		 * \brief print
 		 * \return
 		 */
-		std::string print() const;
+		KUAINRULE_API std::string print() const;
 
 		/**** UNIQUE FUNCTIONS ****/
 		/*!
 		 * \brief Run calculation
 		 * \return Shortened normal form from the truth table
 		 */
-		NormalForm *run();
+		KUAINRULE_API NormalForm *run();
 	};
 
 }

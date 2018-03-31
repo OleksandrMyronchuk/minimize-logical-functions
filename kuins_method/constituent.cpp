@@ -1,7 +1,6 @@
-#include <iostream>
 #include <cmath>
 #include "constituent.h"
-#include "expression.h"
+#include "defines.h"
 
 namespace nsKuainRule {
 

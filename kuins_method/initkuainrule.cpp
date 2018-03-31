@@ -1,10 +1,5 @@
 #include "initkuainrule.h"
 
-#include <iostream>
-#include <cmath>
-#include "kuainrule.h"
-#include "expression.h"
-
 namespace nsKuainRule {
 
 	/**** CONSTRUCTOR & DESTRUCTOR ****/

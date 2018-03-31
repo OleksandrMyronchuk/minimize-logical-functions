@@ -1,12 +1,5 @@
 #include "expression.h"
 
-#include <vector>
-#include <iostream>
-#include <bitset>
-#include <cmath>
-#include <exception>
-#include <typeinfo>
-
 namespace nsKuainRule {
 
 	/**** CONSTRUCTOR & DESTRUCTOR ****/

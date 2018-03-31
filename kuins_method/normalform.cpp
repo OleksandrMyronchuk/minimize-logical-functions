@@ -1,8 +1,5 @@
 #include "normalform.h"
 
-#include <iostream>
-#include <bitset>
-
 namespace nsKuainRule {
 
 	/**** CONSTRUCTOR & DESTRUCTOR ****/

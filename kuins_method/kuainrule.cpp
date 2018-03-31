@@ -1,10 +1,7 @@
-#include "kuainrule.h"
-#include <iostream>
 #include <vector>
-#include <bitset>
 #include <algorithm>
+#include "kuainrule.h"
 #include "expression.h"
-#include "normalform.h"
 
 namespace nsKuainRule {
 

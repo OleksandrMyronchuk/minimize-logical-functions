@@ -1,9 +1,5 @@
-#include "perfectnormalform.h"
-
-#include <iostream>
-#include <bitset>
 #include <cstddef>
-#include <cmath>
+#include "perfectnormalform.h"
 
 namespace nsKuainRule {
 

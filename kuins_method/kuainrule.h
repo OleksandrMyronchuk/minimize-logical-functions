@@ -1,10 +1,16 @@
 #ifndef CRAMERRULE_H
 #define CRAMERRULE_H
 
+#ifdef KUAINRULE_EXPORTS  
+#define KUAINRULE_API __declspec(dllexport)   
+#else  
+#define KUAINRULE_API __declspec(dllimport)   
+#endif
+
+#include <string>
 #include "shortnormalform.h"
 #include "normalform.h"
 #include "perfectnormalform.h"
-#include <string>
 
 namespace nsKuainRule {
 
@@ -39,15 +45,15 @@ namespace nsKuainRule {
 		ShortNormalForm *gluing(tNF *typeNormalForm);
 	public:
 		/**** CONSTRUCTOR & DESTRUCTOR ****/
-		KuainRule();
-		~KuainRule();
+		KUAINRULE_API KuainRule();
+		KUAINRULE_API ~KuainRule();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		/*!
 		 * \brief print
 		 * \return
 		 */
-		std::string print();
+		KUAINRULE_API std::string print();
 
 		/**** UNIQUE FUNCTIONS ****/
 		/*!
@@ -58,7 +64,7 @@ namespace nsKuainRule {
 		 * \param [in] perfectNormalForm - Perfect normal form object
 		 * \return Shortened normal form from the perfect normal form
 		 */
-		ShortNormalForm *gluingLoop(PerfectNormalForm *perfectNormalForm);
+		KUAINRULE_API ShortNormalForm *gluingLoop(PerfectNormalForm *perfectNormalForm);
 
 		/*!
 		 * \brief Operation of absorption
@@ -69,7 +75,7 @@ namespace nsKuainRule {
 		 * \param [in] shortNormalForm - Short normal form object
 		 * \return \a NormalForm that was result from the absorption of \a perfectNormalForm and \a shortNormalForm objects
 		 */
-		NormalForm *absorption(PerfectNormalForm *perfectNormalForm, ShortNormalForm *shortNormalForm);
+		KUAINRULE_API NormalForm *absorption(PerfectNormalForm *perfectNormalForm, ShortNormalForm *shortNormalForm);
 	};
 
 }

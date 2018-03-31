@@ -1,9 +1,14 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
+#ifdef KUAINRULE_EXPORTS  
+#define KUAINRULE_API __declspec(dllexport)   
+#else  
+#define KUAINRULE_API __declspec(dllimport)   
+#endif
+
 #include "abstractobject.h"
 #include "defines.h"
-#include <utility>
 #include <cstddef>
 #include <vector>
 
@@ -25,15 +30,15 @@ namespace nsKuainRule {
 		std::vector<__uint8> _variables;
 	public:
 		/**** CONSTRUCTOR & DESTRUCTOR ****/
-		Expression();
-		~Expression();
+		KUAINRULE_API Expression();
+		KUAINRULE_API ~Expression();
 
 		/**** OVERRIDE FUNCTIONS ****/
-		std::string print() const override;
+		KUAINRULE_API std::string print() const override;
 
 		/**** UNIQUE FUNCTIONS ****/
-		Expression static *gluing(const Expression &var1, const Expression &var2);
-		void setVar(bool var);
+		KUAINRULE_API Expression static *gluing(const Expression &var1, const Expression &var2);
+		KUAINRULE_API void setVar(bool var);
 		inline bool compareAllValues(const Expression &other) const
 		{
 			std::size_t currectVarSize = this->_variables.size();

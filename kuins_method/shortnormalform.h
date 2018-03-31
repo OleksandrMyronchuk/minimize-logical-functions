@@ -1,12 +1,16 @@
 #ifndef SHORTNORMALFORM_H
 #define SHORTNORMALFORM_H
 
-#include "defines.h"
+#ifdef KUAINRULE_EXPORTS  
+#define KUAINRULE_API __declspec(dllexport)   
+#else  
+#define KUAINRULE_API __declspec(dllimport)   
+#endif
+
+#include <vector>
 #include "expression.h"
 #include "abstractnormalform.h"
 #include "abstractobject.h"
-#include <cstddef>
-#include <vector>
 
 namespace nsKuainRule {
 
@@ -15,16 +19,16 @@ namespace nsKuainRule {
 		std::vector<Expression> _expressionSNFs;
 	public:
 		/**** Constructor & Destructor ****/
-		ShortNormalForm();
-		~ShortNormalForm();
+		KUAINRULE_API ShortNormalForm();
+		KUAINRULE_API ~ShortNormalForm();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		/*!
 		 * \brief Get all expressions from the SNF class
 		 * \return Vector of \a Expression objects
 		 */
-		std::vector<Expression> &getAllExpr() override;
-		std::string print() const override;
+		KUAINRULE_API std::vector<Expression> &getAllExpr() override;
+		KUAINRULE_API std::string print() const override;
 
 		/**** UNIQUE FUNCTIONS ****/
 		/*!
@@ -40,7 +44,7 @@ namespace nsKuainRule {
 		 *
 		 * \return Numbers of the position of duplicate expressions
 		 */
-		std::vector<__uint64> deleteDuplicates();
+		KUAINRULE_API std::vector<__uint64> deleteDuplicates();
 	};
 
 }

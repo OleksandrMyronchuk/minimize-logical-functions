@@ -1,10 +1,14 @@
 #ifndef PERFECTNORMALFORM_H
 #define PERFECTNORMALFORM_H
 
+#ifdef KUAINRULE_EXPORTS  
+#define KUAINRULE_API __declspec(dllexport)   
+#else  
+#define KUAINRULE_API __declspec(dllimport)   
+#endif
+
 #include <vector>
-#include "defines.h"
 #include "expression.h"
-#include "constituent.h"
 #include "abstractobject.h"
 #include "abstractnormalform.h"
 
@@ -40,23 +44,23 @@ namespace nsKuainRule {
 		 * \param [in] truCons - Vector of true constituents
 		 * \note The count of the \a truCons parameter begins with a zero number
 		 */
-		PerfectNormalForm(const std::vector<Expression> &allExpr);
-		~PerfectNormalForm();
+		KUAINRULE_API PerfectNormalForm(const std::vector<Expression> &allExpr);
+		KUAINRULE_API ~PerfectNormalForm();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		/*!
 		 * \brief Get all expressions from the PNF class
 		 * \return Vector of \a Expression objects
 		 */
-		std::vector<Expression> &getAllExpr() override;
-		std::string print() const override;
+		KUAINRULE_API std::vector<Expression> &getAllExpr() override;
+		KUAINRULE_API std::string print() const override;
 
 		/**** UNIQUE FUNCTIONS ****/
 	   /*!
 		* \brief Set all expressions to the PNF class
 		* \param [in] truCons - Vector of true constituents
 		*/
-		void setAllExpr(const std::vector<Expression> &allExpr);
+		KUAINRULE_API void setAllExpr(const std::vector<Expression> &allExpr);
 	};
 
 }

@@ -1,8 +1,6 @@
-#include "shortnormalform.h"
+#include <cstddef>
 
-#include <iostream>
-#include <bitset>
-#include <algorithm>
+#include "shortnormalform.h"
 
 namespace nsKuainRule {
 

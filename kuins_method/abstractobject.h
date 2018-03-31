@@ -1,7 +1,12 @@
 #ifndef ABSTRACTOBJECT_H
 #define ABSTRACTOBJECT_H
 
-#include <vector>
+#ifdef KUAINRULE_EXPORTS  
+#define KUAINRULE_API __declspec(dllexport)   
+#else  
+#define KUAINRULE_API __declspec(dllimport)   
+#endif
+
 #include <string>
 
 namespace nsKuainRule {
@@ -10,7 +15,7 @@ namespace nsKuainRule {
 	{
 	public:
 		/**** PURE VIRTUAL FUNCTIONS ****/
-		virtual std::string print() const = 0;
+		KUAINRULE_API virtual std::string print() const = 0;
 	};
 
 }

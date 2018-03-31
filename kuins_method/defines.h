@@ -1,6 +1,12 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+#ifdef KUAINRULE_EXPORTS  
+#define KUAINRULE_API __declspec(dllexport)   
+#else  
+#define KUAINRULE_API __declspec(dllimport)   
+#endif
+
 namespace nsKuainRule {
 
 #define __uint64 unsigned long long
