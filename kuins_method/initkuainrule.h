@@ -1,11 +1,6 @@
 #ifndef INITCRAMERRULE_H
 #define INITCRAMERRULE_H
-
-#ifdef KUAINRULE_EXPORTS  
-#define KUAINRULE_API __declspec(dllexport)   
-#else  
-#define KUAINRULE_API __declspec(dllimport)   
-#endif
+#include "global.h"
 
 #include <vector>
 #include "perfectnormalform.h"
@@ -46,6 +41,7 @@ namespace nsKuainRule {
 		 * \param cons
 		 */
 		KUAINRULE_API InitKuainRule(const std::vector<bool> &cons);
+		KUAINRULE_API virtual ~InitKuainRule();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		/*!

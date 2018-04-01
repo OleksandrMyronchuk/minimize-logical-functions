@@ -1,11 +1,6 @@
 #ifndef CONSTITUENT_H
 #define CONSTITUENT_H
-
-#ifdef KUAINRULE_EXPORTS  
-#define KUAINRULE_API __declspec(dllexport)   
-#else  
-#define KUAINRULE_API __declspec(dllimport)   
-#endif
+#include "global.h"
 
 #include <vector>
 #include <cstddef>
@@ -21,7 +16,7 @@ namespace nsKuainRule {
 	public:
 		/**** CONSTRUCTOR & DESTRUCTOR ****/
 		KUAINRULE_API Constituent(const std::vector<bool> &cons);
-		KUAINRULE_API ~Constituent();
+		KUAINRULE_API virtual ~Constituent();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		KUAINRULE_API std::string print() const override;

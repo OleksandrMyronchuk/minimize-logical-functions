@@ -1,11 +1,6 @@
 #ifndef DEFINES_H
 #define DEFINES_H
-
-#ifdef KUAINRULE_EXPORTS  
-#define KUAINRULE_API __declspec(dllexport)   
-#else  
-#define KUAINRULE_API __declspec(dllimport)   
-#endif
+#include "global.h"
 
 namespace nsKuainRule {
 

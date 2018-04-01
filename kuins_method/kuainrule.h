@@ -1,11 +1,6 @@
 #ifndef CRAMERRULE_H
 #define CRAMERRULE_H
-
-#ifdef KUAINRULE_EXPORTS  
-#define KUAINRULE_API __declspec(dllexport)   
-#else  
-#define KUAINRULE_API __declspec(dllimport)   
-#endif
+#include "global.h"
 
 #include <string>
 #include "shortnormalform.h"

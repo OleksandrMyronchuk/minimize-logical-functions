@@ -1,11 +1,6 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
-
-#ifdef KUAINRULE_EXPORTS  
-#define KUAINRULE_API __declspec(dllexport)   
-#else  
-#define KUAINRULE_API __declspec(dllimport)   
-#endif
+#include "global.h"
 
 #include "abstractobject.h"
 #include "defines.h"
@@ -31,7 +26,7 @@ namespace nsKuainRule {
 	public:
 		/**** CONSTRUCTOR & DESTRUCTOR ****/
 		KUAINRULE_API Expression();
-		KUAINRULE_API ~Expression();
+		KUAINRULE_API virtual ~Expression();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		KUAINRULE_API std::string print() const override;

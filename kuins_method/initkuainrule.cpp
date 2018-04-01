@@ -9,6 +9,12 @@ namespace nsKuainRule {
 		this->perfectNormalForm = new PerfectNormalForm(this->constituent->getAllTrueExpr());
 	}
 
+	InitKuainRule::~InitKuainRule()
+	{
+		delete this->constituent;
+		delete this->perfectNormalForm;
+	}
+
 	/**** OVERRIDE FUNCTIONS ****/
 	std::string InitKuainRule::print() const
 	{

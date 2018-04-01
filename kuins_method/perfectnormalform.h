@@ -1,11 +1,6 @@
 #ifndef PERFECTNORMALFORM_H
 #define PERFECTNORMALFORM_H
-
-#ifdef KUAINRULE_EXPORTS  
-#define KUAINRULE_API __declspec(dllexport)   
-#else  
-#define KUAINRULE_API __declspec(dllimport)   
-#endif
+#include "global.h"
 
 #include <vector>
 #include "expression.h"
@@ -45,7 +40,7 @@ namespace nsKuainRule {
 		 * \note The count of the \a truCons parameter begins with a zero number
 		 */
 		KUAINRULE_API PerfectNormalForm(const std::vector<Expression> &allExpr);
-		KUAINRULE_API ~PerfectNormalForm();
+		KUAINRULE_API virtual ~PerfectNormalForm();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		/*!

@@ -1,11 +1,6 @@
 #ifndef SHORTNORMALFORM_H
 #define SHORTNORMALFORM_H
-
-#ifdef KUAINRULE_EXPORTS  
-#define KUAINRULE_API __declspec(dllexport)   
-#else  
-#define KUAINRULE_API __declspec(dllimport)   
-#endif
+#include "global.h"
 
 #include <vector>
 #include "expression.h"
@@ -20,7 +15,7 @@ namespace nsKuainRule {
 	public:
 		/**** Constructor & Destructor ****/
 		KUAINRULE_API ShortNormalForm();
-		KUAINRULE_API ~ShortNormalForm();
+		KUAINRULE_API virtual ~ShortNormalForm();
 
 		/**** OVERRIDE FUNCTIONS ****/
 		/*!
