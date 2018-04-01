@@ -1,7 +1,5 @@
 ﻿#include "initkuainrule.h"
-#include "expression.h"
 #include "normalform.h"
-#include <bitset>
 #include <iostream>
 #include <fstream>
 int main(int argc, char *argv[])
